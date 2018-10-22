@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView textView;
+    //TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Testing reading in the csv file
-        textView = (TextView) findViewById(R.id.textView);
+        //textView = (TextView) findViewById(R.id.textView);
         String mytext = "";
 
         //Reads in the csv
@@ -48,6 +48,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MainActivity","Couldn't read in csv file");
         }
         //testing displaying the csv
-        textView.setText(mytext);
+        //textView.setText(mytext);
     }
 }
