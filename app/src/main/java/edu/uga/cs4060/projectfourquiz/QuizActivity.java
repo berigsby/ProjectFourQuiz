@@ -1,5 +1,6 @@
 package edu.uga.cs4060.projectfourquiz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -9,6 +10,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -17,11 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -50,8 +50,23 @@ public class QuizActivity extends AppCompatActivity
         next.setOnClickListener(new NextButtonClicked());
         addOnRadioButtonListener();
 
-        //Set Layout
-        questionPanel = findViewById(R.id.questionPanel); //TODO Set gesture later
+        questionPanel = findViewById(R.id.quizParent);
+
+        questionPanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                //toggleSomething();
+            }
+        });
+
+        questionPanel.setOnTouchListener(new OnSwipeTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public boolean onSwipeLeft() {
+                nextButtonClicked();
+                //Toast.makeText(getBaseContext(), "left", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
 
         //Create an instance of a quiz question
         quizQuestionsData = new QuizQuestionsData(this); //From this we need to select 6 random quiz questions
@@ -160,7 +175,93 @@ public class QuizActivity extends AppCompatActivity
         //Radio Group
         answers = findViewById(R.id.radioGroup);
 
+        answer1.setOnTouchListener(new OnSwipeTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public boolean onSwipeLeft() {
+                nextButtonClicked();
+                //Toast.makeText(getBaseContext(), "left", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        answer2.setOnTouchListener(new OnSwipeTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public boolean onSwipeLeft() {
+                nextButtonClicked();
+                //Toast.makeText(getBaseContext(), "left", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        answer3.setOnTouchListener(new OnSwipeTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public boolean onSwipeLeft() {
+                nextButtonClicked();
+                //Toast.makeText(getBaseContext(), "left", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
 
+
+    }
+
+    public class OnSwipeTouchListener implements View.OnTouchListener {
+
+        private final GestureDetector gestureDetector = new GestureDetector(new GestureListener());
+
+        public boolean onTouch(final View v, final MotionEvent event) {
+            return gestureDetector.onTouchEvent(event);
+        }
+
+        private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+            private static final int SWIPE_THRESHOLD = 100;
+            private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                boolean result = false;
+                try {
+                    float diffY = e2.getY() - e1.getY();
+                    float diffX = e2.getX() - e1.getX();
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                result = onSwipeRight();
+                            } else {
+                                result = onSwipeLeft();
+                            }
+                        }
+                    } else {
+                        if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffY > 0) {
+                                result = onSwipeBottom();
+                            } else {
+                                result = onSwipeTop();
+                            }
+                        }
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                return result;
+            }
+        }
+
+        public boolean onSwipeRight() {
+            return false;
+        }
+
+        public boolean onSwipeLeft() {
+            return false;
+        }
+
+        public boolean onSwipeTop() {
+            return false;
+        }
+
+        public boolean onSwipeBottom() {
+            return false;
+        }
     }
 
     private void setLayoutForQuiz(QuizQuestions q){
@@ -225,4 +326,5 @@ public class QuizActivity extends AppCompatActivity
 
             }
         }
+
 }
