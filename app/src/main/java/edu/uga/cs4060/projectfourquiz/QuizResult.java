@@ -9,14 +9,22 @@ public class QuizResult extends AppCompatActivity {
     String numCorrect = "";
     String numQuizQuestions = "";
     String resultsString = "You got \n" + numCorrect + "/" + numQuizQuestions +"correct!";
+    QuizInstanceData quizInstanceData = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_result);
         results = findViewById(R.id.results);
 
-        //TODO pull from DB
-        setString("Whatever the db values are", "");
+        quizInstanceData = new QuizInstanceData(this);
+
+        quizInstanceData.open();
+        QuizInstance quizInstance = quizInstanceData.retrieveLatestQuiz();
+        String numCorrectdb = Integer.toString(quizInstance.getNumCorrect());
+        String numAnswereddb = Integer.toString(quizInstance.getNumAnswered());
+        quizInstanceData.close();
+        setString(numCorrectdb, numAnswereddb);
 
         results.setText(resultsString);
     }
@@ -24,5 +32,6 @@ public class QuizResult extends AppCompatActivity {
     private void setString(String numCorrect, String numQuizQuestions){
         this.numCorrect = numCorrect;
         this.numQuizQuestions = numQuizQuestions;
+        resultsString = "You got \n" + numCorrect + "/" + numQuizQuestions +" correct!";
     }
 }
