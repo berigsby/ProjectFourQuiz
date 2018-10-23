@@ -16,7 +16,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,9 +101,7 @@ public class QuizActivity extends AppCompatActivity
             quizInstanceData.open();
             QuizInstance quizInstance = quizInstanceData.retrieveLatestQuiz();
 
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            String date = (dtf.format(now));
+            String date = LocalDate.now().toString() + LocalTime.now().toString();
             quizInstance.setDate(date);
             int numCorrect = quizInstance.getNumCorrect();
             if(answerCorrect){
@@ -207,9 +207,7 @@ public class QuizActivity extends AppCompatActivity
 
                 //Starting a new quiz
                 selectQuizQuestions(6);
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                LocalDateTime now = LocalDateTime.now();
-                String date = (dtf.format(now));
+                String date = LocalDate.now().toString() + LocalTime.now().toString();
                 long q1 = selectedQuizQuestions.get(0).getId();
                 long q2 = selectedQuizQuestions.get(1).getId();
                 long q3 = selectedQuizQuestions.get(2).getId();
