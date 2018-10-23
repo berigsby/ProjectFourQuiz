@@ -74,18 +74,6 @@
             app:layout_constraintTop_toBottomOf="@+id/radioGroup">
 
             <Button
-                android:id="@+id/backButton"
-                android:layout_width="71dp"
-                android:layout_height="wrap_content"
-                android:text="Back" />
-
-            <Button
-                android:id="@+id/checkButton"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="Check" />
-
-            <Button
                 android:id="@+id/nextButton"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
@@ -98,12 +86,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="95dp" />
+        app:layout_constraintGuide_begin="59dp" />
 
     <TextView
         android:id="@+id/qNumTextView"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="43dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -113,6 +101,7 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.222" />
 
 </android.support.constraint.ConstraintLayout>

@@ -71,8 +71,27 @@ public class QuizActivity extends AppCompatActivity {
         quizQuestionsData = new QuizQuestionsData(this); //From this we need to select 6 random quiz questions
         quizInstanceData = new QuizInstanceData(this);
         Log.d(DEBUG_TAG, "Starting quiz activity / check if we can pull values from the Database");
-        new RetreieveQuizQuestions().execute();
 
+        quizInstanceData.open();
+        QuizInstance quizInstance = quizInstanceData.retrieveLatestQuiz();
+        quizInstanceData.close();
+        if(quizInstance != null && quizInstance.getNumAnswered() != 6){
+            currentQuestion = quizInstance.getNumAnswered();
+            quizQuestionsData.open();
+            quizQuestionsList = quizQuestionsData.retrieveAllQuizQuestions();
+            quizQuestionsData.close();
+            selectedQuizQuestions.add(quizQuestionsList.get((int)quizInstance.getQuestion1()));
+            selectedQuizQuestions.add(quizQuestionsList.get((int)quizInstance.getQuestion2()));
+            selectedQuizQuestions.add(quizQuestionsList.get((int)quizInstance.getQuestion3()));
+            selectedQuizQuestions.add(quizQuestionsList.get((int)quizInstance.getQuestion4()));
+            selectedQuizQuestions.add(quizQuestionsList.get((int)quizInstance.getQuestion5()));
+            selectedQuizQuestions.add(quizQuestionsList.get((int)quizInstance.getQuestion6()));
+            Log.d(DEBUG_TAG, "Quiz resumed");
+            Toast.makeText(getBaseContext(), "Quiz Resumed at question "+(currentQuestion+1), Toast.LENGTH_SHORT).show();
+            setLayoutForQuiz(selectedQuizQuestions.get(currentQuestion));
+        } else {
+            new RetreieveQuizQuestions().execute();
+        }
 
         //If the quiz is resumed we need to do something here
 
@@ -140,6 +159,7 @@ public class QuizActivity extends AppCompatActivity {
             }
 
         }
+        answers.clearCheck();
     }
     /**
      * Takes in the number of quiz questions
@@ -287,7 +307,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
 
-        question.setText("What is the capital of " + q.getState() + "?");
+        question.setText("Q"+(currentQuestion+1)+".What is the capital of " + q.getState() + "?");
 
     }
     /**
