@@ -1,5 +1,6 @@
 package edu.uga.cs4060.projectfourquiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -33,5 +34,12 @@ public class QuizResult extends AppCompatActivity {
         this.numCorrect = numCorrect;
         this.numQuizQuestions = numQuizQuestions;
         resultsString = "You got \n" + numCorrect + "/" + numQuizQuestions +" correct!";
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
     }
 }

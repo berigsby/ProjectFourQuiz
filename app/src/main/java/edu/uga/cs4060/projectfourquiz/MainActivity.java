@@ -20,13 +20,21 @@ public class MainActivity extends AppCompatActivity {
     private QuizQuestionsData quizQuestionsData = null;
     Button startActivity;
     Button leaderBoards;
+    Button helpActivity;
     String DEBUG_TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        helpActivity = findViewById(R.id.helpButton);
+        helpActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), HelpActivity.class);
+                startActivity(intent);
+            }
+        });
         startActivity = findViewById(R.id.startButton);
         startActivity.setOnClickListener(new View.OnClickListener() {
             @Override
