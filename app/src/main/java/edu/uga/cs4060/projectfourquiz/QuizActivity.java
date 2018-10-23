@@ -94,7 +94,7 @@ public class QuizActivity extends AppCompatActivity
 
             }else{
                 //Wrong answer
-                Toast.makeText(this, "You suck!", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "You suck!", Toast.LENGTH_SHORT).show();
             }
             quizInstanceData.open();
             QuizInstance quizInstance = quizInstanceData.retrieveLatestQuiz();
