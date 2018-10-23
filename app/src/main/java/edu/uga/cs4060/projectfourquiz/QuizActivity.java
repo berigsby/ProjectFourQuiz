@@ -37,6 +37,7 @@ public class QuizActivity extends AppCompatActivity
     private RadioGroup answers;
     private TextView question;
     private int currentQuestion = 0;
+    int rightRadioID = 0;
     private Button next; //The next button
 
     @Override
@@ -87,7 +88,7 @@ public class QuizActivity extends AppCompatActivity
             Toast.makeText(getBaseContext(), "Please enter your answer", Toast.LENGTH_SHORT).show();
         } else {
             //Then we need to check whether or not you are correct
-            if(userSelection == R.id.answer1){
+            if(userSelection == rightRadioID){
                 //This is the correct answer TODO test case for first answer
                 Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
                 answerCorrect = true;
@@ -133,7 +134,7 @@ public class QuizActivity extends AppCompatActivity
      * @param num
      */
     private void selectQuizQuestions(int num){
-        //List<Integer> noDups = new List<Integer>;
+
         HashSet<Integer> noDups = new HashSet<Integer>();
         for(int i = 0; i < num; i++){
             int rand = new Random().nextInt(49); //From 0 to 49
@@ -164,12 +165,30 @@ public class QuizActivity extends AppCompatActivity
     }
 
     private void setLayoutForQuiz(QuizQuestions q){
-        int rightanswer = 0;
+        rightRadioID = 0;
         //We know the right answer is the first value in the capital
+        RadioButton[] randomize = new RadioButton[]{
+                answer1,
+                answer2,
+                answer3
+        };
 
-        answer1.setText(q.getCapitalCity());
-        answer2.setText(q.getSecondCity());
-        answer3.setText(q.getThirdCity());
+        String[] cities = new String[]{q.getCapitalCity(),q.getSecondCity(),q.getThirdCity()};
+        HashSet<Integer> noDups = new HashSet<Integer>();
+
+        for(int i = 0; i < cities.length; i++){
+            int randomNumber = new Random().nextInt(3);
+            if(i == 0){
+                noDups.add(randomNumber);
+                randomize[randomNumber].setText(cities[0]);
+                rightRadioID = randomize[randomNumber].getId();
+            }else if(!noDups.contains(randomNumber)){
+                noDups.add(randomNumber);
+                randomize[randomNumber].setText(cities[i]);
+            }else{
+                i--; //reiterate
+            }
+        }
 
         question.setText("What is the capital of " + q.getState() + "?");
 
