@@ -1,5 +1,6 @@
 package edu.uga.cs4060.projectfourquiz;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -80,16 +81,16 @@ public class QuizActivity extends AppCompatActivity
         int userSelection = answers.getCheckedRadioButtonId();
 
         if (userSelection == -1) {
-            Toast.makeText(this, "Please enter your answer", Toast.LENGTH_SHORT);
+            Toast.makeText(getBaseContext(), "Please enter your answer", Toast.LENGTH_SHORT).show();
         } else {
             //Then we need to check whether or not you are correct
-            if(userSelection == 0){
+            if(userSelection == R.id.answer1){
                 //This is the correct answer TODO test case for first answer
-                Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT);
+                Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
 
             }else{
                 //Wrong answer
-                Toast.makeText(this, "You suck!", Toast.LENGTH_SHORT);
+                Toast.makeText(getBaseContext(), "You suck!", Toast.LENGTH_SHORT).show();
             }
             //Then we need to move onto the next question
             currentQuestion++;
@@ -98,6 +99,8 @@ public class QuizActivity extends AppCompatActivity
                 setLayoutForQuiz(selectedQuizQuestions.get(currentQuestion)); //Change 1 to the correct answer
             }else{
                 //Show the final screen
+                Intent intent = new Intent(this,QuizResult.class);
+                startActivity(intent);
             }
 
         }
