@@ -18,7 +18,12 @@
         </activity>
         <activity android:name=".QuizActivity" />
         <activity android:name=".LeaderBoardsActivity" />
-        <activity android:name=".QuizResult"></activity>
+        <activity android:name=".QuizResult">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".HelpActivity"></activity>
     </application>
 
 </manifest>
