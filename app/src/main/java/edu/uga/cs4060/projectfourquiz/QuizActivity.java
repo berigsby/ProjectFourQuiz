@@ -2,6 +2,8 @@ package edu.uga.cs4060.projectfourquiz;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +28,7 @@ public class QuizActivity extends AppCompatActivity
         //TODO Remove QuizQuestionFragment.OnFragmentInterationLisnter
     private String DEBUG_TAG = "QuizActivity";
     private QuizQuestionsData quizQuestionsData = null;
+    private QuizInstanceData quizInstanceData = null;
     private List<QuizQuestions> selectedQuizQuestions = new ArrayList<QuizQuestions>();
     private List<QuizQuestions> quizQuestionsList;
     private ConstraintLayout questionPanel;
@@ -47,6 +52,7 @@ public class QuizActivity extends AppCompatActivity
 
         //Create an instance of a quiz question
         quizQuestionsData = new QuizQuestionsData(this); //From this we need to select 6 random quiz questions
+        quizInstanceData = new QuizInstanceData(this);
         Log.d(DEBUG_TAG, "Starting quiz activity / check if we can pull values from the Database");
         new RetreieveQuizQuestions().execute();
 
@@ -168,6 +174,7 @@ public class QuizActivity extends AppCompatActivity
                 return quizQuestionsList;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             protected void onPostExecute(List<QuizQuestions> q){
                 super.onPostExecute(q);
@@ -175,7 +182,23 @@ public class QuizActivity extends AppCompatActivity
 
                 //Starting a new quiz
                 selectQuizQuestions(6);
-                setLayoutForQuiz(selectedQuizQuestions.get(currentQuestion));
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                String date = (dtf.format(now));
+                long q1 = selectedQuizQuestions.get(0).getId();
+                long q2 = selectedQuizQuestions.get(1).getId();
+                long q3 = selectedQuizQuestions.get(2).getId();
+                long q4 = selectedQuizQuestions.get(3).getId();
+                long q5 = selectedQuizQuestions.get(4).getId();
+                long q6 = selectedQuizQuestions.get(5).getId();
+                int numCorrect = 0;
+                int numAns = 0;
+                QuizInstance quizInstance = new QuizInstance(date,q1,q2,q3,q4,q5,q6,numCorrect,numAns);
+                quizInstanceData.open();
+                quizInstanceData.storeQuizInstance(quizInstance);
+                quizInstanceData.close();
+                Log.d(DEBUG_TAG, quizInstance.toString());
+                setLayoutForQuiz(selectedQuizQuestions.get(0));
 
             }
         }
