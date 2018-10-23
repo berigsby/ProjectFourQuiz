@@ -6,20 +6,91 @@
     android:layout_height="match_parent"
     tools:context=".QuizActivity">
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="edu.uga.cs4060.projectfourquiz.QuizQuestionFragment"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="319dp"
+        android:id="@+id/questionPanel"
+        android:layout_height="411dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/answer1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RadioButton" />
+
+            <RadioButton
+                android:id="@+id/answer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RadioButton" />
+
+            <RadioButton
+                android:id="@+id/answer3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RadioButton" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="364dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center|top"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="71dp"
+                android:layout_height="wrap_content"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/checkButton"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Check" />
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Next" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
@@ -30,47 +101,17 @@
 
     <TextView
         android:id="@+id/qNumTextView"
-        android:layout_width="283dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="start|bottom"
-        android:text="Set QuizQ Num Here"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:layout_width="364dp"
-        android:layout_height="71dp"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center|top"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp"
+        android:gravity="start|bottom"
+        android:text="Set QuizQ Num Here"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="71dp"
-            android:layout_height="wrap_content"
-            android:text="Back" />
-
-        <Button
-            android:id="@+id/checkButton"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="Check" />
-
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="Next" />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
+//TODO Delete the whole fragment
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
