@@ -68,16 +68,19 @@ public class QuizActivity extends AppCompatActivity
      * Implements the onClickLisnter for the next button
      */
     class NextButtonClicked implements View.OnClickListener{
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v){
             nextButtonClicked();
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void nextButtonClicked() {
         //We need to get the selected radio button, if null do not continue
         //Toast please enter your answer
         int userSelection = answers.getCheckedRadioButtonId();
+        boolean answerCorrect = false;
 
         if (userSelection == -1) {
             Toast.makeText(this, "Please enter your answer", Toast.LENGTH_SHORT);
@@ -86,11 +89,29 @@ public class QuizActivity extends AppCompatActivity
             if(userSelection == 0){
                 //This is the correct answer TODO test case for first answer
                 Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT);
-
+                answerCorrect = true;
             }else{
                 //Wrong answer
                 Toast.makeText(this, "You suck!", Toast.LENGTH_SHORT);
             }
+            quizInstanceData.open();
+            QuizInstance quizInstance = quizInstanceData.retrieveLatestQuiz();
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            String date = (dtf.format(now));
+            quizInstance.setDate(date);
+            int numCorrect = quizInstance.getNumCorrect();
+            if(answerCorrect){
+                numCorrect ++;
+            }
+            int numAns = 1 + quizInstance.getNumAnswered();
+            quizInstance.setNumCorrect(numCorrect);
+            quizInstance.setNumAnswered(numAns);
+            //QuizInstance quizInstance = new QuizInstance(date,q1,q2,q3,q4,q5,q6,numCorrect,numAns);
+            quizInstanceData.updateQuizInstance(quizInstance);
+            quizInstanceData.close();
+
             //Then we need to move onto the next question
             currentQuestion++;
             if(currentQuestion < selectedQuizQuestions.size())
