@@ -1,9 +1,11 @@
 package edu.uga.cs4060.projectfourquiz;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,16 +15,14 @@ import java.nio.charset.Charset;
 
 public class MainActivity extends AppCompatActivity {
 
-    //TextView textView;
+    private QuizQuestionsData quizQuestionsData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Testing reading in the csv file
-        //textView = (TextView) findViewById(R.id.textView);
-        String mytext = "";
+        quizQuestionsData = new QuizQuestionsData(this);
 
         //Reads in the csv
         //Should only be done the first time the app ever loads
@@ -36,18 +36,56 @@ public class MainActivity extends AppCompatActivity {
                 //takes in each line and splits at the commas
                 String[] tokens = line.split(",");
                 //These will be changed to load into the database
-                mytext += tokens[0] + " ";
-                mytext += tokens[1] + " ";
-                mytext += tokens[2] + " ";
-                mytext += tokens[3] + " ";
-                mytext += tokens[4] + " ";
-                mytext += tokens[5] + " ";
-                mytext += tokens[6] + "\n";
+                String state = tokens[0];
+                if(state.equalsIgnoreCase("State")){
+                    continue;
+                }
+                String capital = tokens[1];
+                String city2 = tokens[2];
+                String city3 = tokens[3];
+                int stathood = Integer.parseInt(tokens[4]);
+                int capitalsince = Integer.parseInt(tokens[5]);
+                int sizerank = Integer.parseInt(tokens[6]);
+
+                QuizQuestions quizQuestion = new QuizQuestions(state,capital,city2,city3,stathood,capitalsince,sizerank);
+
+                //TODO this doesnt seem to be working when the app is first loaded. Works when clicked from a button
+                //async task
+                //new CreateQuizQuestionTask().execute(quizQuestion);
             }
         }catch(IOException e){
             Log.e("MainActivity","Couldn't read in csv file");
         }
-        //testing displaying the csv
-        //textView.setText(mytext);
+    }
+
+    private class CreateQuizQuestionTask extends AsyncTask<QuizQuestions, Void, QuizQuestions>{
+
+        @Override
+        protected QuizQuestions doInBackground(QuizQuestions... quizQuestion){
+            quizQuestionsData.storeQuizQuestion(quizQuestion[0]);
+            return quizQuestion[0];
+        }
+
+        @Override
+        protected void onPostExecute(QuizQuestions quizQuestion){
+            Toast.makeText(getApplicationContext(), "Quiz Question created for " + quizQuestion.getState(),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d( "Main Activity", "onResume");
+        if(quizQuestionsData != null)
+            quizQuestionsData.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause(){
+        Log.d("Main Activity", "onPause");
+        if(quizQuestionsData != null)
+            quizQuestionsData.close();
+        super.onPause();
     }
 }
