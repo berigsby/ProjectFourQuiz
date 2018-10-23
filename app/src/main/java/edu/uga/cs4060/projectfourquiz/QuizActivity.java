@@ -8,9 +8,12 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,13 +35,16 @@ public class QuizActivity extends AppCompatActivity
     private RadioButton answer1, answer2, answer3;
     private RadioGroup answers;
     private TextView question;
-
+    private int currentQuestion = 0;
+    private Button next; //The next button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         question = findViewById(R.id.qNumTextView);
+        next = findViewById(R.id.nextButton);
+        next.setOnClickListener(new NextButtonClicked());
         addOnRadioButtonListener();
 
         //Set Layout
@@ -59,6 +65,38 @@ public class QuizActivity extends AppCompatActivity
     }
 
     /**
+     * Implements the onClickLisnter for the next button
+     */
+    class NextButtonClicked implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            nextButtonClicked();
+        }
+    }
+
+    private void nextButtonClicked() {
+        //We need to get the selected radio button, if null do not continue
+        //Toast please enter your answer
+        int userSelection = answers.getCheckedRadioButtonId();
+
+        if (userSelection == -1) {
+            Toast.makeText(this, "Please enter your answer", Toast.LENGTH_SHORT);
+        } else {
+            //Then we need to check whether or not you are correct
+            if(userSelection == 0){
+                //This is the correct answer TODO test case for first answer
+                Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT);
+
+            }else{
+                //Wrong answer
+                Toast.makeText(this, "You suck!", Toast.LENGTH_SHORT);
+            }
+            //Then we need to move onto the next question
+            currentQuestion++;
+            setLayoutForQuiz(selectedQuizQuestions.get(currentQuestion)); //Change 1 to the correct answer
+        }
+    }
+    /**
      * Takes in the number of quiz questions
      * and sets the list to that many
      * @param num
@@ -72,7 +110,6 @@ public class QuizActivity extends AppCompatActivity
             {
                 selectedQuizQuestions.add(quizQuestionsList.get(rand));
                 noDups.add(rand);
-
             }else{
                 Log.d(DEBUG_TAG, "Duplicate accessed choosing another value");
                 i--; //Iterate again and choose a non dup
