@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".QuizActivity" />
-        <activity android:name=".LeaderBoardsActivity"></activity>
+        <activity android:name=".LeaderBoardsActivity" />
+        <activity android:name=".QuizResult"></activity>
     </application>
 
 </manifest>

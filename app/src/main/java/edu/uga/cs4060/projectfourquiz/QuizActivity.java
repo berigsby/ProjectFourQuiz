@@ -87,7 +87,13 @@ public class QuizActivity extends AppCompatActivity
             }
             //Then we need to move onto the next question
             currentQuestion++;
-            setLayoutForQuiz(selectedQuizQuestions.get(currentQuestion)); //Change 1 to the correct answer
+            if(currentQuestion < selectedQuizQuestions.size())
+            {
+                setLayoutForQuiz(selectedQuizQuestions.get(currentQuestion)); //Change 1 to the correct answer
+            }else{
+                //Show the final screen
+            }
+
         }
     }
     /**
