@@ -1,10 +1,12 @@
 package edu.uga.cs4060.projectfourquiz;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -16,14 +18,27 @@ import java.nio.charset.Charset;
 public class MainActivity extends AppCompatActivity {
 
     private QuizQuestionsData quizQuestionsData = null;
-
+    Button startActivity;
+    String DEBUG_TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startActivity = findViewById(R.id.startButton);
+        startActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), QuizActivity.class);
+                startActivity(intent);
+            }
+        });
         quizQuestionsData = new QuizQuestionsData(this);
+        LoadInQuestions();
 
+    }
+
+    private void LoadInQuestions(){
         //Reads in the csv
         //Should only be done the first time the app ever loads
         //Add in if the db exists, dont do this...
@@ -49,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
                 QuizQuestions quizQuestion = new QuizQuestions(state,capital,city2,city3,stathood,capitalsince,sizerank);
 
+                Log.d(DEBUG_TAG,"Trying to add" + quizQuestion.toString());
                 //TODO this doesnt seem to be working when the app is first loaded. Works when clicked from a button
                 //async task
-                //new CreateQuizQuestionTask().execute(quizQuestion);
+                new CreateQuizQuestionTask().execute(quizQuestion);
+                //break; //TODO remove just to test one instance
             }
         }catch(IOException e){
             Log.e("MainActivity","Couldn't read in csv file");

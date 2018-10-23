@@ -54,6 +54,8 @@ public class QuizQuestionsData {
     public List<QuizQuestions> retrieveAllQuizQuestions() {
         ArrayList<QuizQuestions> quizQuestions = new ArrayList<>();
         Cursor cursor = null;
+        //TODO Remove this Log
+        Log.d(DEBUG_TAG, "QuizQuestions Accessing all questions ");
 
         try {
             // Execute the select query and get the Cursor to iterate over the retrieved rows
@@ -92,7 +94,7 @@ public class QuizQuestionsData {
 
     // Store a new quiz question in the database
     public QuizQuestions storeQuizQuestion( QuizQuestions quizQuestions ) {
-
+        open();
         // Prepare the values for all of the necessary columns in the table
         // and set their values to the variables of the quiz questions argument.
         // This is how we are providing persistence to a QuizQuestions (Java object) instance

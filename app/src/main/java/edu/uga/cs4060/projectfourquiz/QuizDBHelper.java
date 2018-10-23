@@ -89,7 +89,10 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     public static synchronized QuizDBHelper getInstance( Context context ) {
         // check if the instance already exists and if not, create the instance
         if( helperInstance == null ) {
+            Log.d("QuizDBHelper", "HelperInstance is null, recreated");
             helperInstance = new QuizDBHelper( context.getApplicationContext() );
+        }else{
+            Log.d("QuizDBHelper", "HelperInstance is not null"); //dont think this is right
         }
         return helperInstance;
     }
@@ -98,6 +101,10 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     // it does not exist yet.
     @Override
     public void onCreate( SQLiteDatabase db ) {
+        //TODO REMOVE this is just a test to see if values are created correctly
+      //db.execSQL( "drop table if exists " + TABLE_QUIZQUESTIONS );
+        //db.execSQL( "drop table if exists " + TABLE_QUIZHISTORY );
+
         db.execSQL( CREATE_QUIZQUESTIONS );
         Log.d( DEBUG_TAG, "Table " + TABLE_QUIZQUESTIONS + " created" );
 
