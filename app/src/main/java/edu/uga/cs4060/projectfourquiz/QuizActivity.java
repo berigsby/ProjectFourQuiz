@@ -26,9 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class QuizActivity extends AppCompatActivity
-        implements QuizQuestionFragment.OnFragmentInteractionListener {
-        //TODO Remove QuizQuestionFragment.OnFragmentInterationLisnter
+public class QuizActivity extends AppCompatActivity {
     private String DEBUG_TAG = "QuizActivity";
     private QuizQuestionsData quizQuestionsData = null;
     private QuizInstanceData quizInstanceData = null;
@@ -200,8 +198,6 @@ public class QuizActivity extends AppCompatActivity
                 return true;
             }
         });
-
-
     }
 
     public class OnSwipeTouchListener implements View.OnTouchListener {
@@ -299,7 +295,6 @@ public class QuizActivity extends AppCompatActivity
      * TODO Change the Parameters to something useful
      * @param uri
      */
-    @Override
     public void onFragmentInteraction(Uri uri){
 
         }

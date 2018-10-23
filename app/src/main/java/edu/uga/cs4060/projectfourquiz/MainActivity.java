@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private QuizQuestionsData quizQuestionsData = null;
     Button startActivity;
+    Button leaderBoards;
     String DEBUG_TAG = "MainActivity";
 
     @Override
@@ -34,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        leaderBoards = findViewById(R.id.leaderboardButton);
+        leaderBoards.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LeaderBoardsActivity.class);
+                startActivity(intent);
+            }
+        }));
+
+
         quizQuestionsData = new QuizQuestionsData(this);
     }
 
