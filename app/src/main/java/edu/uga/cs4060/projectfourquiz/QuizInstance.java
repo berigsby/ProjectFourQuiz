@@ -14,6 +14,7 @@ public class QuizInstance {
     private long question5;
     private long question6;
     private int numCorrect;
+    private int numAnswered;
 
     public QuizInstance(){
         this.id = -1;
@@ -25,9 +26,10 @@ public class QuizInstance {
         this.question5 = -1;
         this.question6 = -1;
         this.numCorrect = -1;
+        this.numAnswered = -1;
     }
 
-    public QuizInstance(String date, long q1, long q2, long q3, long q4, long q5, long q6, int numCorrect){
+    public QuizInstance(String date, long q1, long q2, long q3, long q4, long q5, long q6, int numCorrect, int numAnswered){
         this.id = -1;
         this.date = date;
         this.question1 = q1;
@@ -37,6 +39,7 @@ public class QuizInstance {
         this.question5 = q5;
         this.question6 = q6;
         this.numCorrect = numCorrect;
+        this.numAnswered = numAnswered;
     }
 
     public long getId() {
@@ -75,6 +78,8 @@ public class QuizInstance {
         return numCorrect;
     }
 
+    public int getNumAnswered(){ return numAnswered; }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -111,6 +116,8 @@ public class QuizInstance {
         this.numCorrect = numCorrect;
     }
 
+    public void setNumAnswered(int numAnswered) {this.numAnswered = numAnswered; }
+
     @Override
     public String toString() {
         return "QuizInstance{" +
@@ -123,6 +130,7 @@ public class QuizInstance {
                 ", question5=" + question5 +
                 ", question6=" + question6 +
                 ", numCorrect=" + numCorrect +
+                ", numAnswered=" + numAnswered +
                 '}';
     }
 }

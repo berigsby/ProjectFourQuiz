@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private QuizQuestionsData quizQuestionsData = null;
     Button startActivity;
     String DEBUG_TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +35,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         quizQuestionsData = new QuizQuestionsData(this);
-        LoadInQuestions();
-
     }
 
+    /**
+     * This Method reads in the csv file and loads the values into the db questions table if need be
+     */
     private void LoadInQuestions(){
         //Reads in the csv
         //Should only be done the first time the app ever loads
@@ -65,28 +67,24 @@ public class MainActivity extends AppCompatActivity {
                 QuizQuestions quizQuestion = new QuizQuestions(state,capital,city2,city3,stathood,capitalsince,sizerank);
 
                 Log.d(DEBUG_TAG,"Trying to add" + quizQuestion.toString());
-                //TODO this doesnt seem to be working when the app is first loaded. Works when clicked from a button
+
                 //async task
                 new CreateQuizQuestionTask().execute(quizQuestion);
-                //break; //TODO remove just to test one instance
             }
         }catch(IOException e){
             Log.e("MainActivity","Couldn't read in csv file");
         }
     }
 
+    /**
+     * This class is used to initialize the db questions table
+     */
     private class CreateQuizQuestionTask extends AsyncTask<QuizQuestions, Void, QuizQuestions>{
 
         @Override
         protected QuizQuestions doInBackground(QuizQuestions... quizQuestion){
             quizQuestionsData.storeQuizQuestion(quizQuestion[0]);
             return quizQuestion[0];
-        }
-
-        @Override
-        protected void onPostExecute(QuizQuestions quizQuestion){
-            Toast.makeText(getApplicationContext(), "Quiz Question created for " + quizQuestion.getState(),
-                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -95,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d( "Main Activity", "onResume");
         if(quizQuestionsData != null)
             quizQuestionsData.open();
+
+        //This will Check if the db questions table needs to be initialzed and do so if need be
+        if(quizQuestionsData.getDBInitBool())
+            LoadInQuestions();
         super.onResume();
     }
 

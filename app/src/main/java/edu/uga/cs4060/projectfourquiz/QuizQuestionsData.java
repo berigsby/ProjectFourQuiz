@@ -94,7 +94,7 @@ public class QuizQuestionsData {
 
     // Store a new quiz question in the database
     public QuizQuestions storeQuizQuestion( QuizQuestions quizQuestions ) {
-        open();
+        //open();
         // Prepare the values for all of the necessary columns in the table
         // and set their values to the variables of the quiz questions argument.
         // This is how we are providing persistence to a QuizQuestions (Java object) instance
@@ -118,5 +118,19 @@ public class QuizQuestionsData {
         Log.d( DEBUG_TAG, "Stored new quiz question with id: " + String.valueOf( quizQuestions.getId() ) );
 
         return quizQuestions;
+    }
+
+    /**
+     * This method is used to check if the db questions table needs to be initialized
+     *
+     * @return boolean true if the db needs to be initialized, false otherwise
+     */
+    public boolean getDBInitBool(){
+        //If the boolean is false, then the db onCreate has already been called.
+        //If the boolean is true, we need to initialize the questions table
+        boolean dbbool = QuizDBHelper.dbInitialized;
+        if(dbbool)
+            QuizDBHelper.dbInitialized = false;
+        return dbbool;
     }
 }

@@ -21,6 +21,11 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "quiz.db";
     private static final int DB_VERSION = 1;
 
+    //This boolean is used to check if the db questions are populated.
+    //If the boolean is false, then the db onCreate has already been called.
+    //If the boolean is true, we need to initialize the questions table
+    public static boolean dbInitialized = false;
+
     // Define all names (strings) for quiz info table and column names.
     public static final String TABLE_QUIZQUESTIONS = "quizQuestions";
     public static final String QUIZQUESTIONS_COLUMN_ID = "_id";
@@ -43,6 +48,7 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     public static final String QUIZHISTORY_COLUMN_QUESTION_FIVE = "questionfive";
     public static final String QUIZHISTORY_COLUMN_QUESTION_SIX = "questionsix";
     public static final String QUIZHISTORY_COLUMN_NUMBER_CORRECT = "numbercorrect";
+    public static final String QUIZHISTORY_COLUMN_NUMBER_ANSWERED = "numberanswered";
 
     // This is a reference to the only instance for the helper.
     private static QuizDBHelper helperInstance;
@@ -75,17 +81,25 @@ public class QuizDBHelper extends SQLiteOpenHelper {
                     + QUIZHISTORY_COLUMN_QUESTION_FOUR + " INTEGER, "
                     + QUIZHISTORY_COLUMN_QUESTION_FIVE + " INTEGER, "
                     + QUIZHISTORY_COLUMN_QUESTION_SIX + " INTEGER, "
-                    + QUIZHISTORY_COLUMN_NUMBER_CORRECT + " INTEGER"
+                    + QUIZHISTORY_COLUMN_NUMBER_CORRECT + " INTEGER, "
+                    + QUIZHISTORY_COLUMN_NUMBER_ANSWERED + " INTEGER"
                     + ")";
 
-    // Note that the constructor is private!
-    // So, it can be called only from
-    // this class, in the getInstance method.
+    /**
+     * This constructor is private so the only instance of the class is accessed through getInstance
+     *
+     * @param context
+     */
     private QuizDBHelper( Context context ) {
         super( context, DB_NAME, null, DB_VERSION );
     }
 
-    // Access method to the single instance of the class
+    /**
+     * This returns the only instance of the QuizDbHelper class
+     *
+     * @param context
+     * @return QuizDBHelper the only instance of this class
+     */
     public static synchronized QuizDBHelper getInstance( Context context ) {
         // check if the instance already exists and if not, create the instance
         if( helperInstance == null ) {
@@ -101,9 +115,11 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     // it does not exist yet.
     @Override
     public void onCreate( SQLiteDatabase db ) {
-        //TODO REMOVE this is just a test to see if values are created correctly
-      //db.execSQL( "drop table if exists " + TABLE_QUIZQUESTIONS );
-        //db.execSQL( "drop table if exists " + TABLE_QUIZHISTORY );
+        db.execSQL( "drop table if exists " + TABLE_QUIZQUESTIONS );
+        db.execSQL( "drop table if exists " + TABLE_QUIZHISTORY );
+        //This Boolean is used to check if the DB was just updated so that we can initialize it
+        //We set it to true here so that we know it needs to be initialized.
+        dbInitialized = true;
 
         db.execSQL( CREATE_QUIZQUESTIONS );
         Log.d( DEBUG_TAG, "Table " + TABLE_QUIZQUESTIONS + " created" );
