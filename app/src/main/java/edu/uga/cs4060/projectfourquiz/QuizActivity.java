@@ -26,6 +26,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The engine where most of the quiz runs. Everything is done here.
+ */
 public class QuizActivity extends AppCompatActivity {
     private String DEBUG_TAG = "QuizActivity";
     private QuizQuestionsData quizQuestionsData = null;
@@ -40,6 +43,10 @@ public class QuizActivity extends AppCompatActivity {
     int rightRadioID = 0;
     private Button next; //The next button
 
+    /**
+     * OnCreate Method sets the up the view and prelaods the DB
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +118,9 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * The functionality to the next button
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void nextButtonClicked() {
         //We need to get the selected radio button, if null do not continue
@@ -129,7 +139,7 @@ public class QuizActivity extends AppCompatActivity {
 
             }else{
                 //Wrong answer
-                Toast.makeText(this, "You suck!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
             }
             quizInstanceData.open();
             QuizInstance quizInstance = quizInstanceData.retrieveLatestQuiz();
@@ -220,6 +230,9 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Our swipe listener. Will add onto the swipe aka the list of failed tinder dates
+     */
     public class OnSwipeTouchListener implements View.OnTouchListener {
 
         private final GestureDetector gestureDetector = new GestureDetector(new GestureListener());
@@ -281,6 +294,10 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets the radio group which has changes the value after the user answers a user.
+     * @param q
+     */
     private void setLayoutForQuiz(QuizQuestions q){
         rightRadioID = 0;
         //We know the right answer is the first value in the capital
@@ -319,8 +336,16 @@ public class QuizActivity extends AppCompatActivity {
 
         }
 
-        public class RetreieveQuizQuestions extends AsyncTask<Void, Void, List<QuizQuestions>>{
-
+    /**
+     * Obtains the class that extends the AsynTask
+     * used to retrieve the values of the DB asynchronously
+     */
+    public class RetreieveQuizQuestions extends AsyncTask<Void, Void, List<QuizQuestions>>{
+        /**
+         * Called to instantiate the first quiz
+         * @param params
+         * @return
+         */
             @Override
             protected List<QuizQuestions> doInBackground(Void... params){
                 //Open the db
@@ -334,7 +359,11 @@ public class QuizActivity extends AppCompatActivity {
                 return quizQuestionsList;
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.O)
+        /**
+         *  After the thread is done set the screen and store the quiz into the DB
+         * @param q
+         */
+        @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             protected void onPostExecute(List<QuizQuestions> q){
                 super.onPostExecute(q);
