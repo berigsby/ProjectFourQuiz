@@ -54,7 +54,6 @@ public class QuizQuestionsData {
     public List<QuizQuestions> retrieveAllQuizQuestions() {
         ArrayList<QuizQuestions> quizQuestions = new ArrayList<>();
         Cursor cursor = null;
-        //TODO Remove this Log
         Log.d(DEBUG_TAG, "QuizQuestions Accessing all questions ");
 
         try {

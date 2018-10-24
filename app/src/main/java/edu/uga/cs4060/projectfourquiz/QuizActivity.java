@@ -329,7 +329,6 @@ public class QuizActivity extends AppCompatActivity {
     }
     /**
      * Communicates between the fragments and the Activity
-     * TODO Change the Parameters to something useful
      * @param uri
      */
     public void onFragmentInteraction(Uri uri){
