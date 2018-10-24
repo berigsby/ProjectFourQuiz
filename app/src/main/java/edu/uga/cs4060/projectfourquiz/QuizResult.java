@@ -3,6 +3,8 @@ package edu.uga.cs4060.projectfourquiz;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -14,10 +16,18 @@ public class QuizResult extends AppCompatActivity {
     String numQuizQuestions = "";
     String resultsString = "You got \n" + numCorrect + "/" + numQuizQuestions +"correct!";
     QuizInstanceData quizInstanceData = null;
-
+    Button leaderboards;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        leaderboards = findViewById(R.id.quizHistory);
+        leaderboards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (getBaseContext(), LeaderBoardsActivity.class);
+                startActivity(intent);
+            }
+        });
         setContentView(R.layout.activity_quiz_result);
         results = findViewById(R.id.results);
 
