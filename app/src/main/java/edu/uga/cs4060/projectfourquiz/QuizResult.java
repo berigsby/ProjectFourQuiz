@@ -20,15 +20,17 @@ public class QuizResult extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        leaderboards = findViewById(R.id.quizHistory);
+        setContentView(R.layout.activity_quiz_result);
+
+        leaderboards = (Button)findViewById(R.id.quizHistoryResult);
         leaderboards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (getBaseContext(), LeaderBoardsActivity.class);
+                Intent intent = new Intent (v.getContext(), LeaderBoardsActivity.class);
                 startActivity(intent);
             }
         });
-        setContentView(R.layout.activity_quiz_result);
+
         results = findViewById(R.id.results);
 
         quizInstanceData = new QuizInstanceData(this);

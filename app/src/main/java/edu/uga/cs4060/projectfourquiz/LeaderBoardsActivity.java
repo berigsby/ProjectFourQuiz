@@ -10,25 +10,16 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * This is the leaderboards activity it will display all the previous quizzes
+ * This is the leaderboard activity it will display all the quizzes previously taken
  */
 public class LeaderBoardsActivity extends AppCompatActivity{
 
     QuizInstanceData quizInstanceData = null;
     TextView textView;
-    Button quizHistory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboards);
-        quizHistory = findViewById(R.id.quizHistory);
-        quizHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), LeaderBoardsActivity.class);
-                startActivity(intent);
-            }
-        });
         textView = (TextView) findViewById(R.id.textView2);
 
         quizInstanceData = new QuizInstanceData(this);
