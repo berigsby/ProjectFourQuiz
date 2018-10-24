@@ -1,6 +1,5 @@
 package edu.uga.cs4060.projectfourquiz;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -27,9 +26,10 @@ public class LeaderBoardsActivity extends AppCompatActivity{
         for(int counter = 0; counter <= quizzes.size()-1;counter++){
             String date = quizzes.get(counter).getDate();
             String numCorrect = Integer.toString(quizzes.get(counter).getNumCorrect());
-            String numAnswered = "6";
+            String numAnswered = Integer.toString(quizzes.get(counter).getNumAnswered());
+            if(!numAnswered.equalsIgnoreCase("6"))
+                continue;
             myResults += "Quiz on " + date + ":\n    You got " + numCorrect + " of " + numAnswered + ".\n\n";
-            //myResults += (quizzes.get(counter).toString()+ "\n");
         }
         textView.setText(myResults);
 
