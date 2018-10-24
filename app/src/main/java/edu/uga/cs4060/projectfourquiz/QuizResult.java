@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * Quiz Results. Displays the immediate quiz results
+ */
 public class QuizResult extends AppCompatActivity {
     TextView results;
     String numCorrect = "";
@@ -30,12 +33,20 @@ public class QuizResult extends AppCompatActivity {
         results.setText(resultsString);
     }
 
+    /**
+     * Set the phrase to display to user
+     * @param numCorrect
+     * @param numQuizQuestions
+     */
     private void setString(String numCorrect, String numQuizQuestions){
         this.numCorrect = numCorrect;
         this.numQuizQuestions = numQuizQuestions;
         resultsString = "You got \n" + numCorrect + "/" + numQuizQuestions +" correct!";
     }
 
+    /**
+     * Override the back button and go to main activity
+     */
     @Override
     public void onBackPressed(){
         super.onBackPressed();
