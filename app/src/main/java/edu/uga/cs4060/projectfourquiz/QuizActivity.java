@@ -133,7 +133,7 @@ public class QuizActivity extends AppCompatActivity {
         } else {
             //Then we need to check whether or not you are correct
             if(userSelection == rightRadioID){
-                //This is the correct answer TODO test case for first answer
+                //This is the correct answer
                 Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
                 answerCorrect = true;
 
