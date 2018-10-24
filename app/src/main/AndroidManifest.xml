@@ -17,13 +17,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".QuizActivity" />
-        <activity android:name=".LeaderBoardsActivity" />
+
+        <activity android:name=".LeaderBoardsActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
+        </activity>
+
         <activity android:name=".QuizResult">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".HelpActivity"></activity>
+
+        <activity android:name=".HelpActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

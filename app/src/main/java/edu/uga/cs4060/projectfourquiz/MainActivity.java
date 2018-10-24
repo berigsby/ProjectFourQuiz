@@ -15,6 +15,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+/**
+ * The Main Menu aka the Splash Screen allows
+ * you to navigate from leaderboards, quiz, and
+ * help.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private QuizQuestionsData quizQuestionsData = null;
