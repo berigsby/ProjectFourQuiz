@@ -132,4 +132,14 @@ public class MainActivity extends AppCompatActivity {
             quizQuestionsData.close();
         super.onPause();
     }
+
+    /**
+     * Override the back button and go to main activity
+     */
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
+    }
 }
