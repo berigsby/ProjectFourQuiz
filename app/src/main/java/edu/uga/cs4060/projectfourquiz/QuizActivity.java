@@ -134,7 +134,7 @@ public class QuizActivity extends AppCompatActivity {
             quizInstanceData.open();
             QuizInstance quizInstance = quizInstanceData.retrieveLatestQuiz();
 
-            String date = LocalDate.now().toString() + LocalTime.now().toString();
+            String date = LocalDate.now().toString() + " " + LocalTime.now().toString();
             quizInstance.setDate(date);
             int numCorrect = quizInstance.getNumCorrect();
             if(answerCorrect){
@@ -342,7 +342,7 @@ public class QuizActivity extends AppCompatActivity {
 
                 //Starting a new quiz
                 selectQuizQuestions(6);
-                String date = LocalDate.now().toString() + LocalTime.now().toString();
+                String date = LocalDate.now().toString() + " " + LocalTime.now().toString();
                 long q1 = selectedQuizQuestions.get(0).getId();
                 long q2 = selectedQuizQuestions.get(1).getId();
                 long q3 = selectedQuizQuestions.get(2).getId();
